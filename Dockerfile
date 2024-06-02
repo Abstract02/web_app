@@ -19,5 +19,7 @@ RUN npm run build
 # Install serve globally
 RUN npm install -g serve
 
+EXPOSE 8080
+
 # Use serve to serve the built React app
 CMD ["serve", "-s", "build", "-l", "8080"]
