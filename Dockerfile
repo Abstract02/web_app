@@ -20,4 +20,4 @@ RUN npm run build
 RUN npm install -g serve
 
 # Use serve to serve the built React app
-CMD ["serve", "-s", "build", "-l", "3000"]
+CMD ["serve", "-s", "build", "-l", "8080"]
