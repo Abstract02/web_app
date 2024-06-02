@@ -4,7 +4,7 @@ steps:
       - build
       - '--no-cache'
       - '-t'
-      - '$_DEPLOY_REGION-$_GCR_HOSTNAME/$PROJECT_ID/multiproadmin/web_app:$COMMIT_SHA'
+      - '$_DEPLOY_REGION-$_GCR_HOSTNAME/$PROJECT_ID/multiproadmin/webapp:$COMMIT_SHA'
       - .
       - '-f'
       - Dockerfile
@@ -12,16 +12,16 @@ steps:
   - name: gcr.io/cloud-builders/docker
     args:
       - push
-      - '$_DEPLOY_REGION-$_GCR_HOSTNAME/$PROJECT_ID/multiproadmin/web_app:$COMMIT_SHA'
+      - '$_DEPLOY_REGION-$_GCR_HOSTNAME/$PROJECT_ID/multiproadmin/webapp:$COMMIT_SHA'
     id: Push
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
     args:
       - beta
       - run
       - deploy
-      - web_app
+      - webapp
       - '--platform=managed'
-      - '--image=$_DEPLOY_REGION-$_GCR_HOSTNAME/$PROJECT_ID/multiproadmin/web_app:$COMMIT_SHA'
+      - '--image=$_DEPLOY_REGION-$_GCR_HOSTNAME/$PROJECT_ID/multiproadmin/webapp:$COMMIT_SHA'
       
       - >-
         --labels=managed-by=gcp-cloud-build-deploy-cloud-run,commit-sha=$COMMIT_SHA,gcb-build-id=$BUILD_ID,gcb-trigger-id=$_TRIGGER_ID,$_LABELS
@@ -30,7 +30,7 @@ steps:
     id: Deploy
     entrypoint: gcloud
 images:
-  - '$_DEPLOY_REGION-$_GCR_HOSTNAME/$PROJECT_ID/multiproadmin/web_app:$COMMIT_SHA'
+  - '$_DEPLOY_REGION-$_GCR_HOSTNAME/$PROJECT_ID/multiproadmin/webapp:$COMMIT_SHA'
 options:
   substitutionOption: ALLOW_LOOSE
   logging: CLOUD_LOGGING_ONLY
